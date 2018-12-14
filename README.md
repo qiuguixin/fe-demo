@@ -1,4 +1,3 @@
-
 ## HTML
 
 我在想，要用怎样的方式讲才会让你更高效率的上手。这里就用到了“8/2”法则，用20%的信息产生80%的价值。我就假装我是你，我会：
@@ -148,12 +147,6 @@
 
 2. **代码注释**，代码注释的作用是帮助程序员标注代码的用途，不会影响页面的显示和布局。语法就是`<!--****注释文字 -->`
 3. 还有其他90%的标签，忘掉他们，至少现在不需要了解。
-
-
-
-## 3、关键知识清单
-
-TODO
 
 
 
@@ -638,9 +631,9 @@ CSS主要就是基于该模型来布局的。
 
 但是这里需要了解一下，元素的分类：
 
-- 有些元素默认占一行，可以设置宽高，这种叫**块级元素**（block）,比如<div>、 <p>、<h1>、<ul> 和 <li>
-- 有些元素默认占内容大小，不可以设置宽高，这种叫**内联元素**（inline），比如<span>、<a>
-- 有些元素默认占内容大小，可以设置宽高，这种叫**内联块元素**（inline-block），比如<img>、<input>
+- 有些元素默认占一行，可以设置宽高，这种叫**块级元素**（block）,比如`<div>`、` <p>`、`<h1>`、`<ul>` 和 `<li>`
+- 有些元素默认占内容大小，不可以设置宽高，这种叫**内联元素**（inline），比如`<span>`、`<a>`
+- 有些元素默认占内容大小，可以设置宽高，这种叫**内联块元素**（inline-block），比如`<img>`、`<input>`
 
 > 对于不可设置宽高的内联元素我们需要先把他转成块状元素，才可以设置固定的宽高
 
@@ -1089,30 +1082,633 @@ div{
 
 > 布局的传统解决方案基于盒子模型，依赖 display 属性 + position 属性 + float 属性。它对于那些特殊布局非常不方便，比如，垂直居中（下文会专门讲解）就不容易实现。在目前主流的移动端页面中，使用 flex 布局能更好地完成需求，因此 flex 布局的知识是必须要掌握的。
 
+我们先上几个例子来了解一下flex的简洁。
 
+[元素在父盒子内水平垂直居中](https://qiuguixin.github.io/fe-demo/html/style-flex-1.html)
 
-Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型提供最大的灵活性。
+[固定-自适应布局](https://qiuguixin.github.io/fe-demo/html/style-flex-2.html)
 
-设为 Flex 布局以后，子元素的`float`、`clear`和`vertical-align`属性将失效。
+#### 元素在父盒子内水平垂直居中
 
-任何一个容器都可以指定为 Flex 布局。
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/11129071.jpg)
 
-```css
-.box{
-  display: flex;
-}
+```html
+<!DOCTYPE html>
+<head>
+    <title>flex布局</title>
+    <style>
+        .container{
+            width: 800px;
+            margin: 0 auto;
+        }
+        .box{
+            border: 1px solid red;
+        }
+        .box-1{
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box-1 .flex-item{
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box box-1">
+            <div class="flex-item">我水平垂直居中</div>
+        </div>
+    </div>
+</body>
 ```
 
+注意上面这三行代码：
+
+```css
+display: flex;
+justify-content: center;
+align-items: center;
+```
+
+用flex布局，只用在父元素上设置这三行代码就可以实现子元素在父元素内水平垂直居中。
+
+- `display: flex;`指定为 Flex 布局
+- `justify-content: center;`主轴方向上居中
+- `align-items: center;`主轴垂直方向上居中
 
 
-采用 Flex 布局的元素，称为 Flex 容器（flex container），简称"容器"。它的所有子元素自动成为容器成员，称为 Flex 项目（flex item），简称"项目"。
 
-容器主要有如下属性：
+#### 固定-自适应布局
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/62250112.jpg)
+
+```html
+<!DOCTYPE html>
+<head>
+    <title>flex布局</title>
+    <style>
+        .container{
+            width: 800px;
+            margin: 0 auto;
+        }
+        .box{
+            border: 1px solid red;
+        }
+    </style>
+    <style>
+        .box-2{
+            height: 100px;
+            display: flex;
+        }
+        .box-2 .flex-item-1{
+            border: 1px solid blue;
+            width: 100px;
+        }
+        .box-2 .flex-item-2{
+            border: 1px solid blue;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>固定-自适应布局：</p>
+        <div class="box box-2">
+            <div class="flex-item-1">我固定</div>
+            <div class="flex-item-2">我自适应</div>
+        </div>
+    </div>
+</body>
+```
+
+- 固定宽度的元素设置固定宽度
+- 自适应的元素占用剩余空间设置`flex: 1;`
+
+#### 语法
+
+外面父元素设置`display: flex`后，会有如下可设置属性：
 
 ```
 flex-direction
 flex-wrap
 justify-content
 align-items
+align-conte
 ```
+
+##### flex-direction
+
+[查看示例]()
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/37012903.jpg)
+
+决定主轴的方向。有四个值：
+
+- `row`（默认值）：主轴为水平方向，起点在左端。
+- `row-reverse`：主轴为水平方向，起点在右端。
+- `column`：主轴为垂直方向，起点在上沿。
+- `column-reverse`：主轴为垂直方向，起点在下沿。
+
+```css
+.box {
+  flex-direction: row | row-reverse | column | column-reverse;
+}
+```
+
+##### flex-wrap
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/33730417.jpg)
+
+决定项目在主轴上换不换行、如何换行。有三个值：
+
+- `nowrap`（默认）：不换行。
+- `wrap`：换行，第一行在上方。
+- `wrap-reverse`：换行，第一行在下方。
+
+```
+.box{
+  flex-wrap: nowrap | wrap | wrap-reverse;
+}
+```
+
+
+
+##### justify-content
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/24079314.jpg)
+
+决定项目在主轴上的对齐方式。有5个值：
+
+- `flex-start`（默认值）：左对齐
+- `flex-end`：右对齐
+- `center`： 居中
+- `space-between`：两端对齐，项目之间的间隔都相等。
+- `space-around`：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+
+```
+.box {
+  justify-content: flex-start | flex-end | center | space-between | space-around;
+}
+```
+
+
+
+##### align-items
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/9389087.jpg)
+
+决定项目在主轴垂直方向上如何对齐。同样有5个值：
+
+- `flex-start`：交叉轴的起点对齐。
+- `flex-end`：交叉轴的终点对齐。
+- `center`：交叉轴的中点对齐。
+- `baseline`: 项目的第一行文字的基线对齐。
+- `stretch`（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+
+```
+.box {
+  align-items: flex-start | flex-end | center | baseline | stretch;
+}
+```
+
+
+
+
+
+
+
+##### align-content
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/3345015.jpg)
+
+决定**多行**项目在主轴垂直方向上如何对齐（单行不起作用）。同样有5个值：
+
+- `flex-start`：交叉轴的起点对齐。
+- `flex-end`：交叉轴的终点对齐。
+- `center`：交叉轴的中点对齐。
+- `baseline`: 项目的第一行文字的基线对齐。
+- `stretch`（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+
+```
+.box {
+  align-items: flex-start | flex-end | center | baseline | stretch;
+}
+```
+
+
+
+项目的属性有6个：
+
+```
+order
+flex-grow
+flex-shrink
+flex-basis
+flex
+align-self
+```
+
+这里直讲两个最常用的：`flex`和`align-self`,剩下的忽略。
+
+##### flex
+
+两种常见情况：
+
+- 当只给一个项目设置`flex: 1;`，则该项目占据父元素剩余的空间
+
+- 当给所有项目设置`flex: 1;`，则项目平局分布父元素空间
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/42147884.jpg)
+
+```
+<div class="Grid">
+  <div class="Grid-cell">...</div>
+  <div class="Grid-cell">...</div>
+  <div class="Grid-cell">...</div>
+</div>
+```
+
+```
+.Grid {
+  display: flex;
+}
+
+.Grid-cell {
+  flex: 1;
+}
+```
+
+其他参考[阮一峰的教程](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)
+
+##### align-self
+
+![](http://pj4frwcfh.bkt.clouddn.com/18-12-14/88232316.jpg)
+
+允许单个项目设置与其他项目在**垂直主轴方向**有不一样的对齐方式，可覆盖`align-items`属性，有6个值，默认值auto表示继承父元素的`align-items`属性。
+
+```css
+.item {
+  align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}
+```
+
+
+
+
+
+
+
+
+
+### 其他补充
+
+
+
+#### 文字排版--字体
+
+我们可以使用css样式为网页中的文字设置字体、字号、颜色等样式属性。下面我们来看一个例子，下面代码实现：为网页中的文字设置字体为宋体。
+
+```
+body{font-family:"宋体";}
+```
+
+这里注意不要设置不常用的字体，因为如果用户本地电脑上如果没有安装你设置的字体，就会显示浏览器默认的字体。（因为用户是否可以看到你设置的字体样式取决于用户本地电脑上是否安装你设置的字体。）
+现在一般网页喜欢设置“微软雅黑”，如下代码：
+
+```
+body{font-family:"Microsoft Yahei";}
+```
+
+或
+
+```
+body{font-family:"微软雅黑";}
+```
+
+注意：第一种方法比第二种方法兼容性更好一些。
+
+因为这种字体即美观又可以在客户端安全的显示出来（用户本地一般都是默认安装的）。
+
+
+
+#### 文字排版--字号、颜色
+
+可以使用下面代码设置网页中文字的字号为12像素，并把字体颜色设置为#666(灰色)：
+
+```
+body{font-size:12px;color:#666}
+```
+
+
+
+#### 文字排版--粗体
+
+我们还可以使用css样式来改变文字的样式：粗体、斜体、下划线、删除线，可以使用下面代码实现设置文字以粗体样式显示出来。
+
+```
+p span{font-weight:bold;}
+```
+
+在这里大家可以看到，如果想为文字设置粗体是有单独的css样式来实现的，再不用为了实现粗体样式而使用h1-h6或strong标签了。
+
+
+
+#### 文字排版--斜体
+
+以下代码可以实现文字以斜体样式在浏览器中显示：
+
+```
+p a{font-style:italic;}
+
+<p>三年级时，我还是一个<a>胆小如鼠</a>的小女孩。</p>
+```
+
+
+
+#### 文字排版--下划线
+
+有些情况下想为文字设置为下划线样式，这样可以在视觉上强调文字，可以使用下面代码来实现：
+
+```
+p a{text-decoration:underline;}
+
+<p>三年级时，我还是一个<a>胆小如鼠</a>的小女孩。</p>
+```
+
+
+
+#### 文字排版--删除线
+
+如果想在网页上设置删除线怎么办，这个样式在电商网站上常会见到：
+
+![img](http://img.mukewang.com/53a0149700010f4802370316.jpg)
+
+上图中的原价上的删除线使用下面代码就可以实现：
+
+```
+ .oldPrice{text-decoration:line-through;}
+```
+
+
+
+#### 段落排版--缩进
+
+中文文字中的段前习惯空两个文字的空白，这个特殊的样式可以用下面代码来实现：
+
+```
+p{text-indent:2em;}
+<p>1922年的春天，一个想要成名名叫尼克卡拉威（托比?马奎尔Tobey Maguire 饰）的作家，离开了美国中西部，来到了纽约。那是一个道德感渐失，爵士乐流行，走私为王，股票飞涨的时代。为了追寻他的美国梦，他搬入纽约附近一海湾居住。</p>
+```
+
+
+注意：2em的意思就是文字的2倍大小。
+
+
+
+#### 段落排版--行间距（行高）
+
+这一小节我们来学习一下另一个在段落排版中起重要作用的行间距（行高）属性（line-height），如下代码实现设置段落行间距为1.5倍。
+
+```
+p{line-height:1.5em;}
+<p>菲茨杰拉德，二十世纪美国文学巨擘之一，兼具作家和编剧双重身份。他以诗人的敏感和戏剧家的想象为"爵士乐时代"吟唱华丽挽歌，其诗人和梦想家的气质亦为那个奢靡年代的不二注解。</p>
+```
+
+
+
+#### 段落排版--中文字间距、字母间距
+
+**中文字间隔、字母间隔设置：**
+
+如果想在网页排版中设置**文字间隔**或者**字母间隔**就可以使用    **letter-spacing** 来实现，如下面代码：
+
+```
+h1{
+    letter-spacing:50px;
+}
+...
+<h1>了不起的盖茨比</h1>
+```
+
+注意：这个样式使用在英文单词时，是设置字母与字母之间的间距。
+
+**单词间距设置**：
+
+如果我想设置英文单词之间的间距呢？可以使用 **word-spacing** 来实现。如下代码：
+
+```
+h1{
+    word-spacing:50px;
+}
+...
+<h1>welcome to imooc!</h1>
+```
+
+
+
+#### 段落排版--对齐
+
+想为**块状元素**中的文本、图片设置居中样式吗？可以使用text-align样式代码，如下代码可实现文本居中显示。(那么什么是块状元素呢？在后面的11-1、11-2小节中会讲到。)
+
+```
+h1{
+    text-align:center;
+}
+<h1>了不起的盖茨比</h1>
+```
+
+同样可以设置居左：
+
+```
+h1{
+    text-align:left;
+}
+<h1>了不起的盖茨比</h1>
+```
+
+还可以设置居右：
+
+```
+h1{
+    text-align:right;
+}
+<h1>了不起的盖茨比</h1>
+```
+
+
+
+
+
+#### 盒模型代码简写
+
+还记得在讲盒模型时外边距(margin)、内边距(padding)和边框(border)设置上下左右四个方向的边距是按照顺时针方向设置的：上右下左。具体应用在margin和padding的例子如下：
+
+```
+margin:10px 15px 12px 14px;/*上设置为10px、右设置为15px、下设置为12px、左设置为14px*/
+```
+
+通常有下面三种缩写方法:
+
+1、如果top、right、bottom、left的值相同，如下面代码：
+
+```
+margin:10px 10px 10px 10px;
+```
+
+可缩写为：
+
+```
+margin:10px;
+```
+
+2、如果top和bottom值相同、left和 right的值相同，如下面代码：
+
+```
+margin:10px 20px 10px 20px;
+```
+
+可缩写为：
+
+```
+margin:10px 20px;
+```
+
+3、如果left和right的值相同，如下面代码：
+
+```
+margin:10px 20px 30px 20px;
+```
+
+可缩写为：
+
+```
+margin:10px 20px 30px;
+```
+
+注意：padding、border的缩写方法和margin是一致的。
+
+
+
+#### 颜色值缩写
+
+关于颜色的css样式也是可以缩写的，当你设置的颜色是16进制的色彩值时，如果每两位的值相同，可以缩写一半。
+
+例子1：
+
+```
+p{color:#000000;}
+```
+
+可以缩写为：
+
+```
+p{color: #000;}
+```
+
+例子2：
+
+```
+p{color: #336699;}
+```
+
+可以缩写为：
+
+```
+p{color: #369;}
+```
+
+
+
+
+
+#### 颜色值
+
+在网页中的颜色设置是非常重要，有字体颜色（color）、背景颜色（background-color）、边框颜色（border）等，设置颜色的方法也有很多种：
+
+1、英文命令颜色
+
+前面几个小节中经常用到的就是这种设置方法：
+
+```
+p{color:red;}
+```
+
+2、RGB颜色
+
+这个与 photoshop 中的 RGB 颜色是一致的，由 R(red)、G(green)、B(blue) 三种颜色的比例来配色。
+
+```
+p{color:rgb(133,45,200);}
+```
+
+每一项的值可以是 0~255 之间的整数，也可以是 0%~100% 的百分数。如：
+
+```
+p{color:rgb(20%,33%,25%);}
+```
+
+3、十六进制颜色
+
+这种颜色设置方法是现在比较普遍使用的方法，其原理其实也是 RGB 设置，但是其每一项的值由 0-255 变成了十六进制 00-ff。
+
+```
+p{color:#00ffff;}
+```
+
+配色表：
+
+[![img](http://img.mukewang.com/54c5b4120001f20808000902.jpg)](http://img.mukewang.com/54c5b4120001f20808000902.jpg)
+
+（单击图片可放大）
+
+
+
+#### 长度值
+
+长度单位总结一下，目前比较常用到px（像素）、em、% 百分比，要注意其实这三种单位都是相对单位。
+
+**1、像素**
+
+像素为什么是相对单位呢？因为像素指的是显示器上的小点（CSS规范中假设“90像素=1英寸”）。实际情况是会和显示器的实际像素值有关，在目前大多数的设计者都倾向于使用像素（px）作为单位。
+
+**2、em**
+
+就是**本元素**给定字体的 font-size 值，如果元素的 font-size 为 14px ，那么 1em = 14px；如果 font-size 为 18px，那么 1em = 18px。如下代码：
+
+```
+p{font-size:12px;text-indent:2em;}
+```
+
+上面代码就是可以实现段落首行缩进 24px（也就是两个字体大小的距离）。
+
+**下面注意一个特殊情况：**
+
+但当给 font-size 设置单位为 em 时，此时计算的标准以 p 的父元素的 font-size 为基础。如下代码：
+
+html:
+
+```
+<p>以这个<span>例子</span>为例。</p>
+```
+
+css:
+
+```
+p{font-size:14px}
+span{font-size:0.8em;}
+```
+
+结果 span 中的字体“例子”字体大小就为 11.2px（14 * 0.8 = 11.2px）。
+
+**3、百分比**
+
+```
+p{font-size:12px;line-height:130%}
+```
+
+设置行高（行间距）为字体的130%（12 * 1.3 = 15.6px）。
+
+
 

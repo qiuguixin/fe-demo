@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <title>flex布局</title>
+    <style>
+        .container{
+            width: 800px;
+            margin: 0 auto;
+        }
+        .box{
+            border: 1px solid red;
+        }
+    </style>
+    <style>
+        .box-2{
+            height: 100px;
+            display: flex;
+        }
+        .box-2 .flex-item-1{
+            border: 1px solid blue;
+            width: 100px;
+        }
+        .box-2 .flex-item-2{
+            border: 1px solid blue;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>固定-自适应布局：</p>
+        <div class="box box-2">
+            <div class="flex-item-1">我固定</div>
+            <div class="flex-item-2">我自适应</div>
+        </div>
+
+    </div>
+</body>
