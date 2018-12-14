@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #id1 li>div{
+            border: 2px solid red;
+            width: 100px;
+            height: 100px;
+            padding: 20px;
+        }
+        /*#id1 li>div>div{
+            border: 2px solid red;
+            width: 100px;
+            height: 100px;
+            padding: 20px;
+        } */
+    </style>
+    <style>
+        #id2 li div{
+            border: 2px solid red;
+            width: 100px;
+            height: 100px;
+            padding: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- 演示子选择器 -->
+    <ul id="id1">
+        <li>
+        	<div>
+                第一代子元素
+                <div>第二代子元素</div>
+        	</div>
+        </li>
+        <li>
+            <span>第一代子元素
+                <div>第二代子元素</div>
+            </span>    
+        </li>
+    </ul>
+
+    <!-- 演示后代选择器 -->
+    <ul id="id2">
+        <li>
+        	<div>
+                第一代子元素
+                <div>第二代子元素</div>
+        	</div>
+        </li>
+        <li>
+            <span>第一代子元素
+                <div>第二代子元素</div>
+            </span>    
+        </li>
+    </ul>
+</body>
+</html>
